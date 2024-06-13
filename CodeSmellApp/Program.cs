@@ -7,7 +7,7 @@
 			string custName = "Juan Dela Cruz";
 			string custAddr = "Manila, Philippines";
 			string prodName = "Laptop";
-			int quantity = 5;
+			int quantity = 15;
 			double price = 50000.00;
 
 			CustomerOrderManager manager = new CustomerOrderManager();
@@ -67,7 +67,6 @@
 		{
 			public static void SaveOrder(Order order)
 			{
-				// Simulate saving order to database
 				if (order == null)
 				{
 					throw new ArgumentNullException(nameof(order));
