@@ -4,56 +4,58 @@
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello, World!");
+			string custName = "Juan Dela Cruz";
+			string custAddr = "Manila, Philippines";
+			string prodName = "Laptop";
+			int quantity = 5;
+			double price = 50000.00;
+
+			CustomerOrderManager manager = new CustomerOrderManager();
+			manager.ProcessOrder(custName, custAddr, prodName, quantity, price);
+
+			Console.ReadLine(); // Pause to view output
 		}
 
-		// Long Method: This method is doing too many things (validation, calculation, order creation, and saving)
-		private void ProcessOrder(string custName, string custAddr, string prodName, int quantity, double price)
+		class CustomerOrderManager
 		{
-			// Inconsistent Naming: Inconsistent variable naming (custName, custAddr)
-			// Step 1: Validate customer
-			if (custName == null || custAddr == null)
+			public void ProcessOrder(string custName, string custAddr, string prodName, int quantity, double price)
 			{
-				Console.WriteLine("Invalid customer details.");
-				return;
-			}
+				if (custName == null || custAddr == null)
+				{
+					Console.WriteLine("Invalid customer details.");
+					return;
+				}
 
-			// Step 2: Calculate total price
-			double totalPrice = quantity * price;
-			// Conditional Complexity: Complex conditional statement for discount calculation
-			if (quantity > 10)
-			{
-				totalPrice *= 0.9; // Apply discount for bulk orders
-			}
+				double totalPrice = quantity * price;
+				if (quantity > 10)
+				{
+					totalPrice *= 0.9; // Apply discount for bulk orders
+				}
 
-			// Step 3: Create order
-			Order order = new Order
-			{
-				CustomerName = custName,
-				CustomerAddress = custAddr,
-				ProductName = prodName,
-				Quantity = quantity,
-				TotalPrice = totalPrice
-			};
+				Order order = new Order
+				{
+					CustomerName = custName,
+					CustomerAddress = custAddr,
+					ProductName = prodName,
+					Quantity = quantity,
+					TotalPrice = totalPrice
+				};
 
-			// Step 4: Save order to database
-			try
-			{
-				Database.SaveOrder(order);
-			}
-			catch (Exception ex)
-			{
-				// Lack of Error Handling: Only a basic error message, no proper error handling
-				Console.WriteLine("Failed to save order: " + ex.Message);
-			}
+				try
+				{
+					Database.SaveOrder(order);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine("Failed to save order: " + ex.Message);
+				}
 
-			Console.WriteLine("Order processed successfully.");
+				Console.WriteLine("Order processed successfully.");
+			}
 		}
 
-		// Large Class: This class is responsible for too many things related to an order
-		private class Order
+		class Order
 		{
-			// Inconsistent Naming: Use of public fields instead of properties
 			public string CustomerName;
 			public string CustomerAddress;
 			public string ProductName;
@@ -63,8 +65,6 @@
 
 		static class Database
 		{
-			// Tight Coupling: Directly depends on Order class
-			// Lack of Error Handling: Only throws exceptions without handling them
 			public static void SaveOrder(Order order)
 			{
 				// Simulate saving order to database
